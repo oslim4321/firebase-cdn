@@ -1,0 +1,74 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="dispa"></div>
+
+    <div id="countdown"></div>
+    <select id="minute">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+    </select>
+    <p>Seconds</p>
+    <select id="seconds">
+      <option value="10">10</option>
+      <option value="20">20</option>
+      <option value="30">30</option>
+    </select>
+
+    <button id="start">Start timer</button>
+    <script>
+      //   function countdown() {
+      //     // let currentTime = new Date();
+      //     let timeLeft = 610000; // 1 minute and 10 seconds in milliseconds
+      //     // let minutes = Math.floor(timeLeft / (1000 * 60));
+      //     // let seconds = Math.floor(timeLeft / 1000) % 60;
+
+      //     function tick() {
+      //       timeLeft -= 1000;
+      //       minutes = Math.floor(timeLeft / (1000 * 60));
+      //       seconds = Math.floor(timeLeft / 1000) % 60;
+
+      //       // Update the countdown display
+      //       document.getElementById(
+      //         "countdown"
+      //       ).innerHTML = `${minutes}:${seconds}`;
+
+      //       // If the countdown is finished, stop the timer
+      //       if (timeLeft <= 0) {
+      //         clearInterval(interval);
+      //       }
+      //     }
+
+      //     // Start the timer
+      //     let interval = setInterval(tick, 1000);
+      //   }
+
+      //   // Start the countdown
+      //   countdown();
+
+      start.addEventListener("click", () => {
+        let count = Number(minute.value) * 60 + Number(seconds.value);
+        console.log(count);
+        setInterval(() => {
+          count -= 1;
+          countdown.innerHTML = count;
+        }, 1000);
+      });
+
+      dispa.innerHTML = `
+          <div onclick="hamdleClick()">
+      <p>helll</p>
+    </div>
+      `;
+
+      function hamdleClick() {
+        alert();
+      }
+    </script>
+  </body>
+</html>

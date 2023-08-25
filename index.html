@@ -1,0 +1,98 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+<input type="file" id="file-input" />
+
+
+ <script type="module">
+    
+
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js'
+
+    // If you enabled Analytics in your project, add the Firebase SDK for Google Analytics
+    import { getAnalytics } from 'https://www.gstatic.com/firebasejs/10.0.0/firebase-analytics.js'
+
+    // Add Firebase products that you want to use
+    import { getAuth } from 'https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js'
+    import { getFirestore, collection, getDocs} from 'https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js'
+    import { getStorage, ref, uploadBytes ,getDownloadURL} from 'https://www.gstatic.com/firebasejs/10.0.0/firebase-storage.js';
+
+    // Import the functions you need from the SDKs you need
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyAtbKoYIL88ExhcvDCee-kWxo0SiDQck_Y",
+  authDomain: "fir-9-learn-f3acd.firebaseapp.com",
+  projectId: "fir-9-learn-f3acd",
+  storageBucket: "fir-9-learn-f3acd.appspot.com",
+  messagingSenderId: "615746678643",
+  appId: "1:615746678643:web:9abb2ad302fe1cb931df06"
+};
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore();
+const storage = getStorage();
+
+
+const colRef = collection(db, "books");
+
+function display(){
+  getDocs(colRef)
+  .then((querySnapshot) => {
+    querySnapshot.forEach((doc) => {
+      console.log(doc.data(), doc.id);
+    });
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+}
+// display()
+  // Upload image
+
+  // Function to handle file upload
+const handleFileUpload = (event) => {
+  const file = event.target.files[0]; // Get the selected file from the input element
+  console.log(file)
+
+  const random = Math.floor(Math.random() * 2000)
+  // Create a storage reference
+  const storageRef = ref(storage, 'images/' + (file.name + random));
+  console.log(storageRef)
+
+   // Upload the file
+  uploadBytes(storageRef, file)
+    .then((snapshot) => {
+      console.log('Image uploaded successfully');
+      // Access the download URL of the uploaded image
+      getDownloadURL(storageRef)
+        .then((downloadURL) => {
+          console.log('Download URL:', downloadURL);
+        })
+        .catch((error) => {
+          console.error('Error getting download URL:', error);
+        });
+    })
+    .catch((error) => {
+      console.error('Error uploading image:', error);
+    });
+};
+
+
+// HTML input file element
+const inputFileElement = document.getElementById('file-input');
+
+// Add event listener to the input file element
+inputFileElement.addEventListener('change', handleFileUpload);
+
+</script>
+
+</html>

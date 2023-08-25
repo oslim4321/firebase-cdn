@@ -1,0 +1,123 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="dispa"></div>
+    <form action="" id="signupForm">
+      <h2>Sign up</h2>
+      <input type="email" name="email" placeholder="email" />
+      <input type="password" name="password" placeholder="password" />
+      <button>Submit</button>
+    </form>
+
+    <form action="" id="loginForm">
+      <h2>Login</h2>
+      <input type="email" name="email" placeholder="email" />
+      <input type="password" name="password" placeholder="password" />
+
+      <button>Login</button>
+    </form>
+
+    <button id="logoutButton">Logout</button>
+    <h1 id="displayUserStatus"></h1>
+
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
+
+      import {
+        createUserWithEmailAndPassword,
+        getAuth,
+        onAuthStateChanged,
+        signInWithEmailAndPassword,
+        signOut,
+      } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js";
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyAtbKoYIL88ExhcvDCee-kWxo0SiDQck_Y",
+        authDomain: "fir-9-learn-f3acd.firebaseapp.com",
+        projectId: "fir-9-learn-f3acd",
+        storageBucket: "fir-9-learn-f3acd.appspot.com",
+        messagingSenderId: "615746678643",
+        appId: "1:615746678643:web:9abb2ad302fe1cb931df06",
+      };
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      export const auth = getAuth();
+
+      // sign up
+      signupForm.addEventListener("submit", async (e) => {
+        e.preventDefault();yma
+        const email = signupForm.email.value;
+        const password = signupForm.password.value;
+        try {
+          const res = await createUserWithEmailAndPassword(
+            auth,
+            email,
+            password
+          );
+          console.log("usere created  success");
+          signupForm.reset();
+        } catch (error) {
+          console.log(error.message);
+        }
+
+        console.log(email, password);
+      });
+
+      // login
+
+      loginForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const email = loginForm.email.value;
+        const password = loginForm.password.value;
+
+        try {
+          const res = await signInWithEmailAndPassword(auth, email, password);
+          console.log("user logged in:");
+          loginForm.reset();
+        } catch (error) {
+          console.log(error.message);
+        }
+      });
+
+      // get loggin uer
+
+      onAuthStateChanged(auth, (user) => {
+        // if (user.email) {
+        user?.email
+          ? (displayUserStatus.innerHTML = `Welcome ${user.email}`)
+          : !user
+          ? (displayUserStatus.innerHTML = "Welcome Guest")
+          : "";
+        // }
+        console.log("user status change: ", user);
+      });
+
+      // logout
+
+      // logging in and out
+      logoutButton.addEventListener("click", async () => {
+        try {
+          const res = await signOut(auth);
+          console.log("user sign out");
+        } catch (error) {
+          console.log(error.message);
+        }
+      });
+
+      dispa.innerHTML = `
+          <div id="idd">
+      <p>helll</p>
+    </div>
+      `;
+      let idd = document.getElementById("idd");
+      console.log(idd.innerHTML);
+      idd.addEventListener("click", () => {
+        alert();
+      });
+    </script>
+  </body>
+</html>
